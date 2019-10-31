@@ -7,9 +7,7 @@ variable "replicas" {}
 variable "ebmeds-configuration" {}
 variable "ebmeds-quay-secret" {}
 variable "users-configuration" {}
-variable "init-helper-command" {
-  default = ["echo"]
-}
+variable "engine-health-check" {}
 variable "health-check-path" {
   default = "/status"
 }
@@ -35,7 +33,7 @@ resource "kubernetes_deployment" "api-gateway-deployment" {
         init_container {
           name = "init-helper"
           image = "busybox"
-          command = var.init-helper-command
+          command = ["sh", "-c", "until wget -O- ${var.engine-health-check}; do echo waiting for engine; sleep 5; done"]
         }
         container {
           name = var.service-name
