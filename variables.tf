@@ -46,3 +46,7 @@ variable "master-data-port" {
 variable "replicas" {
   default = 1
 }
+
+variable "elasticsearch-storage-size" {
+  default = "500Gi"
+}

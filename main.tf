@@ -36,6 +36,34 @@ resource "null_resource" "elastic-kubernetes-resource-definiton" {
   }
 }
 
+resource "kubernetes_persistent_volume" "elasticsearch-pv" {
+  metadata {
+    name = "elasticsearch-pv"
+    labels = {
+      app = var.app
+      name = "elasticsearch-pv"
+    }
+  }
+  spec {
+    storage_class_name = "elasticsearch-standard"
+    capacity = {
+      storage = var.elasticsearch-storage-size
+    }
+    access_modes = ["ReadWriteOnce"]
+    persistent_volume_source {
+      /******************************* W A R N I N G ********************************
+      * REPLACE WITH A CORRECT PERSISTENT VOLUME TYPE: The hostPath is NOT SUITABLE *
+      * for production and IT _MUST_ BE REPLACED with the persistent volume type    *
+      * that is supported by your kubernetes cluster.                               *
+      *******************************************************************************/
+      host_path {
+        path = "/mnt/elasticsearch-data"
+      }
+    }
+    persistent_volume_reclaim_policy = "Retain"
+  }
+}
+
 module "api-gateway" {
   source = "./module/ebmeds/api-gateway"
 
@@ -102,4 +130,11 @@ module "caregap" {
   api-gateway-health-check = "http://${var.api-gateway-service-name}:${var.api-gateway-port}/status"
   ebmeds-quay-secret = var.ebmeds-quay-secret
   ebmeds-configuration = var.ebmeds-configuration
+}
+
+module "logstash" {
+  source = "./module/elastic/logstash"
+
+  app = var.app
+  replicas = var.replicas
 }

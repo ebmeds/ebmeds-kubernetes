@@ -1,0 +1,11 @@
+# Log pipeline for ebmeds-logs-* indices
+- pipeline.id: ebmeds-log
+  path.config: "/usr/share/logstash/pipeline/ebmeds-log.conf"
+
+# Request pipeline for ebmeds-requests-* indices
+- pipeline.id: ebmeds-request
+  path.config: "/usr/share/logstash/pipeline/ebmeds-request.conf"
+
+# Reminders pipeline for ebmeds-reminders-* indices
+- pipeline.id: ebmeds-reminder
+  path.config: "/usr/share/logstash/pipeline/ebmeds-reminder.conf"
