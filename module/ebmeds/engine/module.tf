@@ -2,6 +2,8 @@ variable "app" {}
 variable "service-name" {
   default = "engine"
 }
+variable "timezone-continent" {}
+variable "timezone-city" {}
 variable "master-data-service-name" {}
 variable "engine-image" {}
 variable "master-data-image" {}
@@ -125,11 +127,33 @@ resource "kubernetes_deployment" "engine-deployment" {
             sub_path = "versions"
             read_only = true
           }
+          volume_mount {
+            name = "tz-config"
+            mount_path = "/etc/localtime"
+          }
+          resources {
+            requests {
+              cpu = "100m"
+              memory = "150Mi"
+            }
+            limits {
+              cpu = "250m"
+              memory = "250Mi"
+            }
+          }
         }
-        volume {
-          name = "master-data-volume"
-          empty_dir {}
-        }
+        
+          volume {
+            name = "master-data-volume"
+            empty_dir {}
+          }
+          volume {
+            name = "tz-config"
+            host_path {
+              path = "/usr/share/zoneinfo/${var.timezone-continent}/${var.timezone-city}"
+            }
+          }
+        
         image_pull_secrets {
           name = var.ebmeds-quay-secret
         }

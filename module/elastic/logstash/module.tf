@@ -37,6 +37,7 @@ resource "kubernetes_config_map" "logstash-configurations" {
     "ebmeds-reminder.conf" = file("${path.module}/pipeline/ebmeds-reminder.conf")
     "ebmeds-request.conf" = file("${path.module}/pipeline/ebmeds-request.conf")
     "flat-source.rb" = file("${path.module}/ruby/flat-source.rb")
+    "elasticsearch-es-http-certs-public.cer" = file("${path.module}/pipeline/elasticsearch-es-http-certs-public.cer")
   }
 }
 
@@ -102,6 +103,11 @@ resource "kubernetes_deployment" "logstash-deployment" {
             mount_path = "/usr/share/logstash/ruby/flat-source.rb"
             name = var.logstash-configuration-volume
             sub_path = "flat-source.rb"
+          }
+          volume_mount {
+            mount_path = "/usr/share/logstash/pipeline/elasticsearch-es-http-certs-public.cer"
+            name = var.logstash-configuration-volume
+            sub_path = "elasticsearch-es-http-certs-public.cer"
           }
         }
         volume {

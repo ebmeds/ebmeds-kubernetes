@@ -76,6 +76,8 @@ module "api-gateway" {
   ebmeds-quay-secret = var.ebmeds-quay-secret
   ebmeds-configuration = var.ebmeds-configuration
   users-configuration = var.users-configuration
+  timezone-city = var.timezone-city
+  timezone-continent = var.timezone-continent
 }
 
 module "engine" {
@@ -91,6 +93,8 @@ module "engine" {
   replicas = var.replicas
   ebmeds-quay-secret = var.ebmeds-quay-secret
   ebmeds-configuration = var.ebmeds-configuration
+  timezone-city = var.timezone-city
+  timezone-continent = var.timezone-continent
 }
 
 module "cmr" {
@@ -104,6 +108,8 @@ module "cmr" {
   api-gateway-health-check = "http://${var.api-gateway-service-name}:${var.api-gateway-port}/status"
   ebmeds-quay-secret = var.ebmeds-quay-secret
   ebmeds-configuration = var.ebmeds-configuration
+  timezone-city = var.timezone-city
+  timezone-continent = var.timezone-continent
 }
 
 module "dsv" {
@@ -117,19 +123,8 @@ module "dsv" {
   api-gateway-health-check = "http://${var.api-gateway-service-name}:${var.api-gateway-port}/status"
   ebmeds-quay-secret = var.ebmeds-quay-secret
   ebmeds-configuration = var.ebmeds-configuration
-}
-
-module "caregap" {
-  source = "./module/ebmeds/general"
-
-  app = var.app
-  service-name = "caregap"
-  image = "quay.io/duodecim/ebmeds-caregap:${var.ebmeds-version}"
-  container-port = 3006
-  replicas = var.replicas
-  api-gateway-health-check = "http://${var.api-gateway-service-name}:${var.api-gateway-port}/status"
-  ebmeds-quay-secret = var.ebmeds-quay-secret
-  ebmeds-configuration = var.ebmeds-configuration
+  timezone-city = var.timezone-city
+  timezone-continent = var.timezone-continent
 }
 
 module "logstash" {

@@ -3,6 +3,8 @@ variable "service-name" {}
 variable "image" {}
 variable "container-port" {}
 variable "replicas" {}
+variable "timezone-continent" {}
+variable "timezone-city" {}
 
 variable "ebmeds-configuration" {}
 variable "ebmeds-quay-secret" {}
@@ -69,12 +71,32 @@ resource "kubernetes_deployment" "api-gateway-deployment" {
             name = "users-volume"
             sub_path = "users.json"
           }
+          volume_mount {
+            name = "tz-config"
+            mount_path = "/etc/localtime"
+          }
+          resources {
+            requests {
+              cpu = "100m"
+              memory = "150Mi"
+            }
+            limits {
+              cpu = "250m"
+              memory = "250Mi"
+            }
+          }
         }
         volume {
           name = "users-volume"
           config_map {
             name = "users-configuration"
           }
+        }
+        volume {
+            name = "tz-config"
+            host_path {
+              path = "/usr/share/zoneinfo/${var.timezone-continent}/${var.timezone-city}"
+            }
         }
         image_pull_secrets {
           name = var.ebmeds-quay-secret

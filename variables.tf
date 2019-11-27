@@ -15,6 +15,14 @@ variable "ebmeds-configuration" {
   default = "ebmeds-configuration"
 }
 
+variable "timezone-continent" {
+  default = "Europe"
+}
+
+variable "timezone-city" {
+  default = "Helsinki"
+}
+
 variable "users-configuration" {
   default = "users-configuration"
 }
@@ -25,6 +33,10 @@ variable "api-gateway-service-name" {
 
 variable "api-gateway-port" {
   default = 3001
+}
+
+variable "caregap-port" {
+  default = 3006
 }
 
 variable "engine-service-name" {
@@ -48,5 +60,5 @@ variable "replicas" {
 }
 
 variable "elasticsearch-storage-size" {
-  default = "500Gi"
+  default = "10Gi" // Please increase this to 500Gi in larger environments
 }
