@@ -1,0 +1,45 @@
+apiVersion: elasticsearch.k8s.elastic.co/v1beta1
+kind: Elasticsearch
+metadata:
+  name: elasticsearch
+spec:
+  version: 7.4.2
+  nodeSets:
+    - name: elasticsearch
+      count: 1
+      config:
+        node.master: true
+        node.data: true
+        node.ingest: true
+        node.store.allow_mmap: false
+      volumeClaimTemplates:
+        - metadata:
+            name: elasticsearch-data
+          spec:
+            accessModes:
+              - ReadWriteOnce
+            resources:
+              requests:
+                storage: 10Gi  # Please increase this to 500Gi in larger environemnts
+            storageClassName: elasticsearch-standard
+
+---
+apiVersion: kibana.k8s.elastic.co/v1beta1
+kind: Kibana
+metadata:
+  name: kibana
+spec:
+  version: 7.4.2
+  count: 1
+  elasticsearchRef:
+    name: elasticsearch
+---
+apiVersion: apm.k8s.elastic.co/v1beta1
+kind: ApmServer
+metadata:
+  name: apm-server
+spec:
+  version: 7.4.2
+  count: 1
+  elasticsearchRef:
+    name: elasticsearch
