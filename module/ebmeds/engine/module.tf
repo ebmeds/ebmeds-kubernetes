@@ -133,12 +133,12 @@ resource "kubernetes_deployment" "engine-deployment" {
           }
           resources {
             requests {
-              cpu = "100m"
-              memory = "150Mi"
+              cpu = "500m"
+              memory = "500Mi"
             }
             limits {
-              cpu = "250m"
-              memory = "250Mi"
+              cpu = "1"
+              memory = "1Gi"
             }
           }
         }
