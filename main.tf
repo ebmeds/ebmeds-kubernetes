@@ -71,6 +71,7 @@ module "api-gateway" {
   service-name = var.api-gateway-service-name
   image = "quay.io/duodecim/ebmeds-api-gateway:${var.ebmeds-version}"
   container-port = var.api-gateway-port
+  node-port = var.api-gateway-node-port
   replicas = 2
   engine-health-check = "http://${var.engine-service-name}:${var.engine-container-port}/status"
   ebmeds-quay-secret = var.ebmeds-quay-secret

@@ -35,6 +35,10 @@ variable "api-gateway-port" {
   default = 3001
 }
 
+variable "api-gateway-node-port" {
+  default = 30001
+}
+
 variable "caregap-port" {
   default = 3006
 }
