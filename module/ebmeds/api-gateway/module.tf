@@ -2,6 +2,7 @@ variable "app" {}
 variable "service-name" {}
 variable "image" {}
 variable "container-port" {}
+variable "node-port" {}
 variable "replicas" {}
 variable "timezone-continent" {}
 variable "timezone-city" {}
@@ -129,7 +130,7 @@ resource "kubernetes_service" "api-gateway-service" {
     port {
       port = var.container-port
       target_port = var.container-port
-      node_port = var.container-port
+      node_port = var.node-port
     }
     type = "NodePort"
   }
