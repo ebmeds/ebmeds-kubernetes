@@ -77,11 +77,11 @@ resource "kubernetes_deployment" "api-gateway-deployment" {
           }
           resources {
             requests {
-              cpu = "100m"
+              cpu = "250m"
               memory = "150Mi"
             }
             limits {
-              cpu = "250m"
+              cpu = "500m"
               memory = "250Mi"
             }
           }
