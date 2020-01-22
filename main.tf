@@ -31,7 +31,7 @@ resource "kubernetes_config_map" "users-configuration" {
 
 resource "null_resource" "elastic-kubernetes-resource-definiton" {
   provisioner "local-exec" {
-    command = "kubectl apply -f https://download.elastic.co/downloads/eck/1.0.0-beta1/all-in-one.yaml"
+    command = "kubectl apply -f ./module/elastic/init/elastic-custom-resource-definition-1.0.0.yaml"
     interpreter = ["sh", "-c"]
   }
 }
