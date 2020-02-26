@@ -3,7 +3,7 @@ variable "service-name" {
   default = "logstash"
 }
 variable "elastic-version" {
-  default = "7.4.2"
+  default = "7.6.0"
 }
 variable "ebmeds-log-port" {
   default = 5000

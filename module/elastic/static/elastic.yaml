@@ -3,7 +3,7 @@ kind: Elasticsearch
 metadata:
   name: elasticsearch
 spec:
-  version: 7.4.2
+  version: 7.6.0
   nodeSets:
     - name: elasticsearch
       count: 1
@@ -29,7 +29,7 @@ kind: Kibana
 metadata:
   name: kibana
 spec:
-  version: 7.4.2
+  version: 7.6.0
   count: 1
   elasticsearchRef:
     name: elasticsearch
@@ -39,7 +39,7 @@ kind: ApmServer
 metadata:
   name: apm-server
 spec:
-  version: 7.4.2
+  version: 7.6.0
   count: 1
   elasticsearchRef:
     name: elasticsearch
